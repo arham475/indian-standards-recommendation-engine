@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Standards DB | ISAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><i data-lucide="cpu"></i></div>
+                <div class="logo-text"><h2>IS<span>AI</span></h2><span class="badge">SIH26108</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-title">MAIN MENU</p>
+                <a href="index.html"><i data-lucide="layout-dashboard"></i> <span>Analyzer</span></a>
+                <a href="standards.html" class="active"><i data-lucide="database"></i> <span>Standards DB</span></a>
+                <a href="history.html"><i data-lucide="folder-clock"></i> <span>Tender History</span></a>
+                <a href="analytics.html"><i data-lucide="bar-chart-2"></i> <span>Analytics</span></a>
+            </nav>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb"><span class="text-muted">ISAI Platform</span> <i data-lucide="chevron-right"></i> <span class="font-semibold">Standards Database</span></div>
+            </header>
+            <div class="dashboard-scroll">
+                <div class="card" style="padding: 24px;">
+                    <div class="card-header">
+                        <h3><i data-lucide="database"></i> Indexed Bureau of Indian Standards (18,566 Records)</h3>
+                    </div>
+                    <div class="search-bar" style="width: 100%; margin-bottom: 20px;">
+                        <i data-lucide="search"></i>
+                        <input type="text" placeholder="Search standard code or description...">
+                    </div>
+                    <table style="width: 100%; border-collapse: collapse; font-size: 14px;">
+                        <thead>
+                            <tr style="border-bottom: 2px solid var(--border); text-align: left; color: var(--text-muted);">
+                                <th style="padding: 12px;">Standard Code</th>
+                                <th style="padding: 12px;">Title</th>
+                                <th style="padding: 12px;">Category</th>
+                                <th style="padding: 12px;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px; font-weight: 700; color: var(--primary);">IS 10322 (Part 5/Sec 3)</td>
+                                <td style="padding: 12px;">Luminaires for Road and Street Lighting</td>
+                                <td style="padding: 12px;">Electrical Engineering</td>
+                                <td style="padding: 12px;"><span class="badge-green">Active</span></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px; font-weight: 700; color: var(--primary);">IS 10 : 1998</td>
+                                <td style="padding: 12px;">Plywood Tea-Chests - Specification</td>
+                                <td style="padding: 12px;">Wood Products</td>
+                                <td style="padding: 12px;"><span class="badge-green">Active</span></td>
+                            </tr>
+                            <tr style="border-bottom: 1px solid var(--border);">
+                                <td style="padding: 12px; font-weight: 700; color: var(--primary);">IS 10258 : 2002</td>
+                                <td style="padding: 12px;">Sterile Hypodermic Syringes for Single Use</td>
+                                <td style="padding: 12px;">Medical Equipment</td>
+                                <td style="padding: 12px;"><span class="badge-green">Active</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script>lucide.createIcons();</script>
+</body>
+</html>

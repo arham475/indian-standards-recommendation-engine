@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tender History | ISAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><i data-lucide="cpu"></i></div>
+                <div class="logo-text"><h2>IS<span>AI</span></h2><span class="badge">SIH26108</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-title">MAIN MENU</p>
+                <a href="index.html"><i data-lucide="layout-dashboard"></i> <span>Analyzer</span></a>
+                <a href="standards.html"><i data-lucide="database"></i> <span>Standards DB</span></a>
+                <a href="history.html" class="active"><i data-lucide="folder-clock"></i> <span>Tender History</span></a>
+                <a href="analytics.html"><i data-lucide="bar-chart-2"></i> <span>Analytics</span></a>
+                
+                <p class="nav-title mt-4">SYSTEM</p>
+                <a href="settings.html"><i data-lucide="settings"></i> <span>Settings</span></a>
+                <a href="docs.html"><i data-lucide="help-circle"></i> <span>Documentation</span></a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb"><span class="text-muted">ISAI Platform</span> <i data-lucide="chevron-right"></i> <span class="font-semibold">Tender History</span></div>
+            </header>
+            <div class="dashboard-scroll">
+                <div class="card" style="padding: 24px;">
+                    <div class="card-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <h3><i data-lucide="folder-clock"></i> Past Procurement Audits</h3>
+                        <button onclick="fetchLiveHistory()" class="btn-outline-small" id="refreshBtn"><i data-lucide="refresh-cw"></i> Refresh</button>
+                    </div>
+                    
+                    <!-- Dynamic Feed Container -->
+                    <div id="live-history-feed" style="display: flex; flex-direction: column; gap: 12px;">
+                        <div style="padding: 20px; text-align: center; color: var(--text-muted);">
+                            <i data-lucide="loader" style="animation: spin 2s linear infinite;"></i>
+                            <p style="margin-top: 10px;">Syncing with cloud database...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div id="toast-container" class="toast-container"></div>
+    <script src="script.js"></script>
+    
+    <!-- Live Cloud Fetch Logic -->
+    <script>
+        lucide.createIcons();
+        
+        async function fetchLiveHistory() {
+            const feed = document.getElementById('live-history-feed');
+            const refreshBtn = document.getElementById('refreshBtn');
+            
+            // UI Loading state
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<i data-lucide="loader"></i> Syncing...';
+            lucide.createIcons();
+            
+            try {
+                const response = await fetch('http://127.0.0.1:5001/api/history');
+                if (!response.ok) throw new Error("Server disconnected");
+                
+                const data = await response.json();
+                
+                if (data.length === 0) {
+                    feed.innerHTML = `
+                        <div style="text-align: center; padding: 40px; border: 1px dashed var(--border); border-radius: 8px;">
+                            <p style="color: var(--text-muted);">No tender audits found in the cloud database yet.</p>
+                            <a href="index.html" class="btn-primary" style="display: inline-block; margin-top: 15px; text-decoration: none;">Run Your First Analysis</a>
+                        </div>`;
+                } else {
+                    let html = '';
+                    data.forEach(item => {
+                        // Truncate the long specification text for a clean title
+                        const rawText = item.specification_text || "Unknown Specification";
+                        const cleanTitle = rawText.substring(0, 65).replace(/\n/g, " ") + '...';
+                        const dateFormatted = new Date(item.timestamp).toLocaleString();
+                        
+                        html += `
+                            <div style="padding: 16px; border: 1px solid var(--border); border-radius: 8px; display: flex; justify-content: space-between; align-items: center; transition: all 0.2s ease;">
+                                <div>
+                                    <h4 style="font-size: 14px; font-weight: 700; margin-bottom: 6px; color: var(--text-color);">${cleanTitle}</h4>
+                                    <p style="font-size: 12px; color: var(--text-muted);">
+                                        Mapped to <strong>${item.top_match_code}</strong> • ${item.accuracy_score}% Accuracy • ${dateFormatted}
+                                    </p>
+                                </div>
+                                <span class="badge-green">Verified</span>
+                            </div>
+                        `;
+                    });
+                    feed.innerHTML = html;
+                }
+            } catch (error) {
+                console.error("Fetch Error:", error);
+                feed.innerHTML = `
+                    <div style="padding: 16px; border: 1px solid #ef4444; border-radius: 8px; background: rgba(239, 68, 68, 0.1);">
+                        <p style="color: #ef4444; font-weight: 600;"><i data-lucide="alert-triangle" style="vertical-align: middle;"></i> Connection Error</p>
+                        <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Could not connect to the Python backend on port 5001.</p>
+                    </div>`;
+                lucide.createIcons();
+            } finally {
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = '<i data-lucide="refresh-cw"></i> Refresh';
+                lucide.createIcons();
+            }
+        }
+        
+        // Trigger fetch immediately when page loads
+        document.addEventListener('DOMContentLoaded', fetchLiveHistory);
+    </script>
+</body>
+</html>

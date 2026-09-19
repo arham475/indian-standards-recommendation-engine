@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISAI | Smart India Hackathon</title>
+    
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><i data-lucide="cpu"></i></div>
+                <div class="logo-text">
+                    <h2>IS<span>AI</span></h2>
+                    <span class="badge">SIH26108</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav" id="sidebarNav">
+                <p class="nav-title">MAIN MENU</p>
+                <a href="index.html" class="active" data-view="analyzer"><i data-lucide="layout-dashboard"></i> <span>Analyzer</span></a>
+                <a href="standards.html" data-view="db"><i data-lucide="database"></i> <span>Standards DB</span></a>
+                <a href="history.html" data-view="history"><i data-lucide="folder-clock"></i> <span>Tender History</span></a>
+                <a href="analytics.html" data-view="analytics"><i data-lucide="bar-chart-2"></i> <span>Analytics</span></a>
+                
+                <p class="nav-title mt-4">SYSTEM</p>
+                <a href="settings.html"><i data-lucide="settings"></i> <span>Settings</span></a>
+                <a href="docs.html"><i data-lucide="help-circle"></i> <span>Documentation</span></a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-card" id="profileBtn">
+                    <img src="https://ui-avatars.com/api/?name=Gov+Official&background=3b82f6&color=fff" alt="User" class="avatar">
+                    <div class="user-info">
+                        <h4>Gov. Official</h4>
+                        <p>Procurement Dept.</p>
+                    </div>
+                    <i data-lucide="chevron-up" class="profile-chevron"></i>
+                </div>
+
+                <div class="profile-dropdown hidden" id="profileDropdown">
+                    <a href="#" id="menuProfile"><i data-lucide="user"></i> My Profile</a>
+                    <a href="#" id="menuPrefs"><i data-lucide="settings"></i> Preferences</a>
+                    <div class="dropdown-divider"></div>
+                    <a href="#" class="text-danger" id="menuLogout"><i data-lucide="log-out"></i> Sign Out</a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb">
+                    <span class="text-muted">ISAI Platform</span> <i data-lucide="chevron-right"></i> <span class="font-semibold">Procurement Analyzer</span>
+                </div>
+                <div class="topbar-actions">
+                    <div class="search-bar">
+                        <i data-lucide="search"></i>
+                        <input type="text" id="topSearch" placeholder="Search past tenders...">
+                    </div>
+                    <button class="icon-btn" id="notifBtn"><i data-lucide="bell"></i><span class="notification-dot"></span></button>
+                    <div class="api-status">
+                        <div class="pulse-dot" id="api-pulse"></div>
+                        <span id="api-status-text">Engine Ready</span>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dashboard-scroll">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon bg-blue"><i data-lucide="book-open"></i></div>
+                        <div class="stat-info">
+                            <p>BIS Standards Indexed</p>
+                            <h3>18,566</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-purple"><i data-lucide="brain-circuit"></i></div>
+                        <div class="stat-info">
+                            <p>AI Model Connected</p>
+                            <h3>Gemini 3.8</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon bg-green"><i data-lucide="activity"></i></div>
+                        <div class="stat-info">
+                            <p>System Accuracy Target</p>
+                            <h3>98.5%</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workspace-grid">
+                    <div class="input-panel card">
+                        <div class="card-header">
+                            <h3><i data-lucide="file-text"></i> Tender Specification</h3>
+                            <button id="clearBtn" class="btn-icon-text"><i data-lucide="rotate-ccw"></i> Reset</button>
+                        </div>
+                        
+                        <div class="upload-zone" id="uploadZone">
+                            <input type="file" id="fileInput" class="hidden" accept=".pdf,.doc,.docx,.txt">
+                            <i data-lucide="upload-cloud"></i>
+                            <p>Click or drag & drop tender document here<br><span class="text-muted">PDF, DOCX, TXT supported</span></p>
+                        </div>
+
+                        <div class="quick-pills">
+                            <button class="pill" onclick="fillExample('Supply of 70W LED streetlights with IP66 protection and die-cast aluminum housing.')">LED Street Light</button>
+                            <button class="pill" onclick="fillExample('Manufacturing of Plywood Tea-Chests for export packaging, 5-ply construction.')">Tea-Chests</button>
+                            <button class="pill" onclick="fillExample('Sterile hypodermic syringes for single use with auto-disable feature.')">Syringes</button>
+                        </div>
+
+                        <div class="textarea-container">
+                            <textarea id="specification" placeholder="Paste procurement requirements, dimensions, materials, and technical criteria..."></textarea>
+                            <div class="scanning-line hidden" id="scan-line"></div>
+                        </div>
+
+                        <div class="input-footer">
+                            <span id="char-count" class="badge-gray">0 chars</span>
+                            <button id="analyzeBtn" class="btn-primary">
+                                <i data-lucide="zap"></i> <span id="btn-text">Run AI Analysis</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="results-panel card">
+                        <div id="empty-state" class="empty-state">
+                            <div class="empty-icon-box"><i data-lucide="layers"></i></div>
+                            <h3>Awaiting Input</h3>
+                            <p>Enter a specification on the left to map it to official Bureau of Indian Standards.</p>
+                        </div>
+
+                        <div id="loading-state" class="loading-state hidden">
+                            <div class="hologram">
+                                <div class="ring-1"></div>
+                                <div class="ring-2"></div>
+                                <i data-lucide="search-code" class="loading-icon"></i>
+                            </div>
+                            <h3 id="loading-text">Vectorizing semantics...</h3>
+                            <div class="progress-bar-container mt-3">
+                                <div class="progress-bar indeterminate"></div>
+                            </div>
+                        </div>
+
+                        <div id="results-dashboard" class="results-content hidden">
+                            <div class="ai-box">
+                                <div class="ai-box-header">
+                                    <div class="flex-align"><i data-lucide="sparkles" class="text-yellow"></i> <h4>Gemini AI Insight</h4></div>
+                                    <span class="badge-yellow">Verification Req.</span>
+                                </div>
+                                <div id="ai-content" class="ai-text"></div>
+                            </div>
+
+                            <div class="results-title-row">
+                                <h3>Mapped BIS Standards</h3>
+                                <button class="btn-outline-small" id="exportBtn"><i data-lucide="printer"></i> Export</button>
+                            </div>
+
+                            <div id="standards-feed" class="standards-feed"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>

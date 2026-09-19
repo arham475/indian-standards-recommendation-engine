@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation | ISAI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-box"><i data-lucide="cpu"></i></div>
+                <div class="logo-text"><h2>IS<span>AI</span></h2><span class="badge">SIH26108</span></div>
+            </div>
+            <nav class="sidebar-nav">
+                <p class="nav-title">MAIN MENU</p>
+                <a href="index.html"><i data-lucide="layout-dashboard"></i> <span>Analyzer</span></a>
+                <a href="standards.html"><i data-lucide="database"></i> <span>Standards DB</span></a>
+                <a href="history.html"><i data-lucide="folder-clock"></i> <span>Tender History</span></a>
+                <a href="analytics.html"><i data-lucide="bar-chart-2"></i> <span>Analytics</span></a>
+                
+                <p class="nav-title mt-4">SYSTEM</p>
+                <a href="settings.html"><i data-lucide="settings"></i> <span>Settings</span></a>
+                <a href="docs.html" class="active"><i data-lucide="help-circle"></i> <span>Documentation</span></a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="breadcrumb"><span class="text-muted">ISAI Platform</span> <i data-lucide="chevron-right"></i> <span class="font-semibold">System Documentation</span></div>
+            </header>
+            <div class="dashboard-scroll">
+                <div class="card" style="padding: 32px; line-height: 1.6;">
+                    <h2 style="margin-bottom: 16px; color: var(--primary);">ISAI Technical Architecture</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 24px;">Smart India Hackathon (SIH26108) Internal Documentation</p>
+                    
+                    <h3 style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">1. Overview</h3>
+                    <p style="margin-bottom: 24px;">ISAI uses a Flask Python backend to process text strings and match them against a vectorized mock database of Bureau of Indian Standards (BIS).</p>
+
+                    <h3 style="margin-bottom: 12px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">2. AI Integration</h3>
+                    <p style="margin-bottom: 24px;">The current model simulates integration with Gemini via a REST API endpoint located at <code>/api/recommend</code> on Port 5001.</p>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <div id="toast-container" class="toast-container"></div>
+    <script src="script.js"></script>
+</body>
+</html>
